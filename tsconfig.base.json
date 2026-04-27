@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@cartovex/types": ["packages/types/src"],
+      "@cartovex/utils": ["packages/utils/src"],
+      "@cartovex/constants": ["packages/constants/src"]
+    }
+  }
+}

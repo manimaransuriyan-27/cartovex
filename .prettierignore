@@ -1,0 +1,10 @@
+node_modules
+apps/server/node_modules
+apps/client/node_modules
+packages/constants/node_modules
+packages/utils/node_modules
+packages/types/node_modules
+dist
+build
+package-lock.json
+*.md

@@ -1,0 +1,30 @@
+{
+  "name": "cartovex-workspace",
+  "version": "1.0.0",
+  "description": "A modern eCommerce platform focused on performance, scalability, and seamless user experience.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "pnpm -r --parallel run dev",
+    "build": "pnpm -r run build",
+    "lint": "pnpm -r run lint",
+    "test": "pnpm -r run test",
+    "format": "prettier --write .",
+    "clean": "pnpm -r exec rm -rf dist node_modules/.cache",
+    "build:pkgs": "pnpm --filter './packages/**' -r run build",
+    "dev:client": "pnpm --filter @cartovex/client run dev",
+    "dev:server": "pnpm --filter @cartovex/server run dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "packageManager": "pnpm@10.28.0",
+  "devDependencies": {
+    "typescript": "^6.0.3",
+    "prettier": "^3.2.0",
+    "eslint": "^9.0.0"
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
+  }
+}
