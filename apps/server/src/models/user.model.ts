@@ -19,7 +19,7 @@ const addressSchema = new mongoose.Schema<IAddress>(
     country: { type: String, default: 'India' },
     isDefault: { type: Boolean, default: false },
   },
-  { _id: true, timestamps: true }
+  { _id: true, timestamps: true },
 );
 
 const userSchema = new Schema<IUser>(
@@ -39,7 +39,7 @@ const userSchema = new Schema<IUser>(
     passwordResetToken: { type: String, select: false },
     passwordResetExpires: { type: Date, select: false },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
 
 userSchema.pre<IUser>('save', async function () {

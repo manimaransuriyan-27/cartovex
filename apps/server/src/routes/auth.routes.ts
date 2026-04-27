@@ -10,13 +10,9 @@ import { resetPasswordController } from '../controllers/auth/resetPassword.contr
 const router = Router();
 
 router.post('/register-admin', registerAdminController);
-
 router.post('/register', registerUserController);
-
 router.post('/login', loginController);
-
 router.post('/forgot-password', forgotPasswordController);
-
 router.put('/reset-password/:token', resetPasswordController);
 
 export default router;

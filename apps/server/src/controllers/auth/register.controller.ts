@@ -35,8 +35,7 @@ const registerUserController = async (req: Request, res: Response) => {
       message: 'User registered successfully',
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: 'Server error' });
+    res.status(500).json({ message: `Server error: ${error}` });
   }
 };
 
@@ -75,8 +74,7 @@ const registerAdminController = async (req: Request, res: Response) => {
       message: 'Admin registered successfully',
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ success: false, message: 'Server error' });
+    res.status(500).json({ message: `Server error: ${error}` });
   }
 };
 
