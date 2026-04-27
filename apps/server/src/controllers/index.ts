@@ -9,3 +9,6 @@ export * from './user/address.controller';
 
 // User controllers
 export * from './user/address.controller';
+
+// Admin controllers
+export * from './admin/admin.controller';

@@ -17,7 +17,7 @@ const updateAddress = async (req: AuthRequest, res: Response) => {
     }
 
     const address = user.addresses.find(
-      (addr) => addr._id?.toString() === req.params.addressId
+      (addr) => addr._id?.toString() === req.params.addressId,
     );
 
     if (!address) {
@@ -34,10 +34,9 @@ const updateAddress = async (req: AuthRequest, res: Response) => {
     Object.assign(address, rest);
     await user.save();
 
-    res.json({ message: 'Address updated', addresses: user.addresses });
+    res.status(201).json({ message: 'Address updated', addresses: user.addresses });
   } catch (error) {
-    console.error('Error updating address:', error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: `Server error: ${error}` });
   }
 };
 
@@ -49,7 +48,7 @@ const getAddresses = async (req: AuthRequest, res: Response) => {
     }
     res.json({ addresses: user.addresses });
   } catch (error) {
-    return res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: `Server error: ${error}` });
   }
 };
 
@@ -79,8 +78,7 @@ const addAddress = async (req: AuthRequest, res: Response) => {
       addresses: user.addresses,
     });
   } catch (error) {
-    console.error('Error fetching user:', error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: `Server error: ${error}` });
   }
 };
 
@@ -93,7 +91,7 @@ const deleteAddress = async (req: AuthRequest, res: Response) => {
     }
 
     const address = user.addresses.find(
-      (addr) => addr._id?.toString() === req.params.addressId
+      (addr) => addr._id?.toString() === req.params.addressId,
     );
 
     if (!address) {
@@ -103,7 +101,7 @@ const deleteAddress = async (req: AuthRequest, res: Response) => {
     const wasDefault = address.isDefault;
 
     user.addresses = user.addresses.filter(
-      (addr) => addr._id.toString() !== req.params.addressId
+      (addr) => addr._id.toString() !== req.params.addressId,
     );
 
     if (wasDefault && user.addresses.length > 0) {
@@ -113,8 +111,7 @@ const deleteAddress = async (req: AuthRequest, res: Response) => {
     await user.save();
     res.json({ message: 'Address deleted', addresses: user.addresses });
   } catch (error) {
-    console.error('Error deleting address:', error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: `Server error: ${error}` });
   }
 };
 
@@ -127,7 +124,7 @@ const setDefaultAddress = async (req: AuthRequest, res: Response) => {
     }
 
     const address = user.addresses.find(
-      (addr) => addr._id?.toString() === req.params.addressId
+      (addr) => addr._id?.toString() === req.params.addressId,
     );
 
     if (!address) {
@@ -140,8 +137,7 @@ const setDefaultAddress = async (req: AuthRequest, res: Response) => {
     await user.save();
     res.json({ message: 'Default address updated', addresses: user.addresses });
   } catch (error) {
-    console.error('Error setting default address:', error);
-    res.status(500).json({ message: 'Server error' });
+    res.status(500).json({ message: `Server error: ${error}` });
   }
 };
 

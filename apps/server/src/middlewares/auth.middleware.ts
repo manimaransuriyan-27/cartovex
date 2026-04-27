@@ -1,9 +1,9 @@
-import { Request, Response, NextFunction } from 'express';
+import { IUser } from '@cartovex/types';
+import { NextFunction, Request, Response } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { User } from '../models/user.model';
-import { IUser } from '@cartovex/types';
 
-interface AuthRequest extends Request {
+export interface AuthRequest extends Request {
   user?: IUser;
 }
 
@@ -17,7 +17,9 @@ const authprotect = async (req: AuthRequest, res: Response, next: NextFunction) 
     const token = authHeader.split(' ')[1];
 
     const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload;
+
     const userId = decoded?.id;
+
     if (!userId || typeof userId !== 'string') {
       return res.status(401).json({ message: 'Invalid token payload' });
     }
