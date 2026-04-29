@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { User } from '../../models/user.model';
+import { UserModel } from '../../models/user.model';
 import { generateToken } from '../../utils/token';
 
 const registerUserController = async (req: Request, res: Response) => {
@@ -11,13 +11,13 @@ const registerUserController = async (req: Request, res: Response) => {
         message: 'Please provide all required fields',
       });
     }
-    const existingUser = await User.findOne({ email });
+    const existingUser = await UserModel.findOne({ email });
 
     if (existingUser) {
       return res.status(400).json({ success: false, message: 'User already exists' });
     }
 
-    const user = await User.create({
+    const user = await UserModel.create({
       email,
       name,
       password,
@@ -49,13 +49,13 @@ const registerAdminController = async (req: Request, res: Response) => {
         message: 'Invalid Secret Key. You cannot register as an admin.',
       });
     }
-    const existingUser = await User.findOne({ email });
+    const existingUser = await UserModel.findOne({ email });
 
     if (existingUser) {
       return res.status(400).json({ success: false, message: 'User already exists' });
     }
 
-    const admin = await User.create({
+    const admin = await UserModel.create({
       email,
       name,
       password,

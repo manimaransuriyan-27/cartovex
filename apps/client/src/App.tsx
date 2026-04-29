@@ -1,12 +1,8 @@
-import './App.css';
+import { RouterProvider } from 'react-router-dom';
+import appRouter from './routes/App.routes';
 
 function App() {
-  return (
-    <div className="App">
-      <h1>Welcome to Cartovex Client!</h1>
-      <p>This is the client application for the Cartovex eCommerce platform.</p>
-    </div>
-  );
+  return <RouterProvider router={appRouter} />;
 }
 
 export default App;

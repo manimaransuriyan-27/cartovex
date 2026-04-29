@@ -1,11 +1,7 @@
-import { IUser } from '@cartovex/types';
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Response } from 'express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
-import { User } from '../models/user.model';
-
-export interface AuthRequest extends Request {
-  user?: IUser;
-}
+import { UserModel } from '../models/user.model';
+import { AuthRequest } from '../types';
 
 const authprotect = async (req: AuthRequest, res: Response, next: NextFunction) => {
   try {
@@ -24,7 +20,7 @@ const authprotect = async (req: AuthRequest, res: Response, next: NextFunction) 
       return res.status(401).json({ message: 'Invalid token payload' });
     }
 
-    req.user = await User.findById(userId).select('-password');
+    req.user = await UserModel.findById(userId).select('-password');
     if (!req.user) {
       return res.status(401).json({ message: 'User no longer exists' });
     }

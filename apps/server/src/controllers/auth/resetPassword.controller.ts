@@ -1,6 +1,6 @@
-import { Request, Response } from 'express';
 import crypto from 'crypto';
-import { User } from '../../models/user.model';
+import { Request, Response } from 'express';
+import { UserModel } from '../../models/user.model';
 
 // @desc    Reset Password
 // @route   PUT /api/v1/auth/reset-password/:token
@@ -11,7 +11,7 @@ export const resetPasswordController = async (req: Request, res: Response) => {
     .update(req.params.token[0])
     .digest('hex');
 
-  const user = await User.findOne({
+  const user = await UserModel.findOne({
     passwordResetToken: hashedToken,
     passwordResetExpires: { $gt: Date.now() },
   });

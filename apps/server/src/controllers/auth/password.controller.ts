@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 import nodemailer from 'nodemailer';
 import { Request, Response } from 'express';
-import { User } from '../../models/user.model';
+import { UserModel } from '../../models/user.model';
 
 // ─── Mailtrap Transporter ─────────────────────────────────────────────────────
 const transporter = nodemailer.createTransport({
@@ -24,7 +24,7 @@ export const forgotPasswordController = async (req: Request, res: Response) => {
     }
 
     // 1. Find the user
-    const user = await User.findOne({ email });
+    const user = await UserModel.findOne({ email });
     if (!user) {
       // Return generic message to avoid user enumeration
       return res.status(200).json({
@@ -105,7 +105,7 @@ export const resetPassword = async (req: Request, res: Response) => {
       .digest('hex');
 
     // 2. Find user with matching token that hasn't expired
-    const user = await User.findOne({
+    const user = await UserModel.findOne({
       resetPasswordToken: hashedToken,
       resetPasswordExpires: { $gt: Date.now() },
     });
