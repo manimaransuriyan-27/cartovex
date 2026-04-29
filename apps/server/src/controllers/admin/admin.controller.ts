@@ -1,9 +1,9 @@
 import { Request, Response } from 'express';
-import { IUser } from '@cartovex/types';
-import { User } from '../../models/user.model';
+import { UserModel } from '../../models/user.model';
+import { IUserDocument } from '../../types/user.types';
 
 interface AuthRequest extends Request {
-  user?: IUser;
+  user?: IUserDocument;
 }
 
 const getAllUsers = async (req: AuthRequest, res: Response) => {
@@ -21,12 +21,12 @@ const getAllUsers = async (req: AuthRequest, res: Response) => {
     const skip = (Number(page) - 1) * Number(limit);
 
     const [users, total] = await Promise.all([
-      User.find(filter)
+      UserModel.find(filter)
         .select('-password')
         .skip(skip)
         .limit(Number(limit))
         .sort({ createdAt: -1 }),
-      User.countDocuments(filter),
+      UserModel.countDocuments(filter),
     ]);
 
     return res.status(200).json({
@@ -43,7 +43,7 @@ const getAllUsers = async (req: AuthRequest, res: Response) => {
 
 const getUserById = async (req: AuthRequest, res: Response) => {
   try {
-    const user = await User.findById(req.params.id).select('-password');
+    const user = await UserModel.findById(req.params.id).select('-password');
     if (!user) return res.status(404).json({ message: 'User not found' });
     res.json(user);
   } catch (error) {
@@ -53,7 +53,7 @@ const getUserById = async (req: AuthRequest, res: Response) => {
 
 export const blockUser = async (req: AuthRequest, res: Response) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await UserModel.findById(req.params.id);
 
     if (!user) return res.status(404).json({ message: 'User not found' });
 
@@ -76,7 +76,7 @@ export const blockUser = async (req: AuthRequest, res: Response) => {
 
 export const deleteUser = async (req: AuthRequest, res: Response) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await UserModel.findById(req.params.id);
 
     if (!user) return res.status(404).json({ message: 'User not found' });
 
@@ -90,5 +90,28 @@ export const deleteUser = async (req: AuthRequest, res: Response) => {
     res.status(500).json({ message: `Server error: ${error}` });
   }
 };
+
+// Dashboard controller
+
+// const getDashboardStats = async (req: AuthRequest, res: Response) => {
+//     try {
+//      const [totalUsers, totalProducts, totalOrders, revenueResult] = await Promise.all([
+//       User.countDocuments({ role: 'user' }),
+//       Product.countDocuments({ isActive: true }),
+//       Order.countDocuments(),
+//       Order.aggregate([
+//         { $match: { status: { $ne: 'cancelled' } } },
+//         { $group: { _id: null, total: { $sum: '$totalPrice' } } },
+//       ]),
+//     ]);
+
+//     const totalRevenue = revenueResult[0]?.total || 0;
+
+//     res.json({ totalUsers, totalProducts, totalOrders, totalRevenue });
+
+//     } catch (error) {
+//         res.status(500).json({ message: `Server error: ${error}` });
+//     }
+// };
 
 export { getAllUsers, getUserById };

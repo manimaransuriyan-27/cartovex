@@ -1,7 +1,6 @@
-import { Document, Types } from 'mongoose';
-
-export interface IAddress {
-  _id: Types.ObjectId;
+export type ID = string;
+export interface IAddress<TId = ID> {
+  _id: TId;
   label: 'home' | 'work' | 'other';
   fullName: string;
   addressLine1: string;
@@ -13,17 +12,19 @@ export interface IAddress {
   country: string;
   isDefault: boolean;
 }
-
-export interface IUser extends Document {
+export interface IUser<TId = ID> {
+  _id: TId;
   name: string;
   email: string;
-  password: string;
   role: 'user' | 'admin';
   phone: string;
-  addresses: IAddress[];
-  isActive: Boolean;
+  addresses: IAddress<TId>[];
+  isActive: boolean;
   createdAt: string;
-  comparePassword(password: string): Promise<boolean>;
-  passwordResetToken?: string;
-  passwordResetExpires?: Date;
+}
+
+export interface IAuthUser<TId = ID> extends IUser<TId> {
+  token: string;
+  success: boolean;
+  message: string;
 }

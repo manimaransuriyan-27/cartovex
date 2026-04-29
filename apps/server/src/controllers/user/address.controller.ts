@@ -1,16 +1,12 @@
-import { Request, Response } from 'express';
-import { User } from '../../models/user.model';
-import { IUser } from '@cartovex/types';
-
-interface AuthRequest extends Request {
-  user?: IUser;
-}
+import { Response } from 'express';
+import { UserModel } from '../../models/user.model';
+import { AuthRequest } from '../../types';
 
 const MAX_ADDRESSES = 5;
 
 const updateAddress = async (req: AuthRequest, res: Response) => {
   try {
-    const user = await User.findById(req.user?._id);
+    const user = await UserModel.findById(req.user?._id);
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -42,7 +38,7 @@ const updateAddress = async (req: AuthRequest, res: Response) => {
 
 const getAddresses = async (req: AuthRequest, res: Response) => {
   try {
-    const user = await User.findById(req.user?._id).select('addresses');
+    const user = await UserModel.findById(req.user?._id).select('addresses');
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -54,7 +50,7 @@ const getAddresses = async (req: AuthRequest, res: Response) => {
 
 const addAddress = async (req: AuthRequest, res: Response) => {
   try {
-    const user = await User.findById(req.user?._id);
+    const user = await UserModel.findById(req.user?._id);
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
@@ -84,7 +80,7 @@ const addAddress = async (req: AuthRequest, res: Response) => {
 
 const deleteAddress = async (req: AuthRequest, res: Response) => {
   try {
-    const user = await User.findById(req.user?._id);
+    const user = await UserModel.findById(req.user?._id);
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -117,7 +113,7 @@ const deleteAddress = async (req: AuthRequest, res: Response) => {
 
 const setDefaultAddress = async (req: AuthRequest, res: Response) => {
   try {
-    const user = await User.findById(req.user?._id);
+    const user = await UserModel.findById(req.user?._id);
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
@@ -141,4 +137,4 @@ const setDefaultAddress = async (req: AuthRequest, res: Response) => {
   }
 };
 
-export { updateAddress, getAddresses, addAddress, deleteAddress, setDefaultAddress };
+export { addAddress, deleteAddress, getAddresses, setDefaultAddress, updateAddress };

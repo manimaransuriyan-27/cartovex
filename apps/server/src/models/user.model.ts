@@ -1,6 +1,7 @@
-import type { IAddress, IUser } from '@cartovex/types';
+import { IAddress } from '@cartovex/types';
 import bcrypt from 'bcryptjs';
 import mongoose, { Schema } from 'mongoose';
+import { IUserDocument } from '../types';
 
 const addressSchema = new mongoose.Schema<IAddress>(
   {
@@ -22,7 +23,7 @@ const addressSchema = new mongoose.Schema<IAddress>(
   { _id: true, timestamps: true },
 );
 
-const userSchema = new Schema<IUser>(
+const userSchema = new Schema<IUserDocument>(
   {
     name: { type: String, required: true, trim: true },
     email: { type: String, required: true, unique: true, lowercase: true, trim: true },
@@ -42,7 +43,7 @@ const userSchema = new Schema<IUser>(
   { timestamps: true },
 );
 
-userSchema.pre<IUser>('save', async function () {
+userSchema.pre<IUserDocument>('save', async function () {
   if (!this.isModified('password')) return;
   try {
     const salt = await bcrypt.genSalt(15);
@@ -56,6 +57,6 @@ userSchema.methods.comparePassword = async function (password: string): Promise<
   return bcrypt.compare(password, this.password);
 };
 
-const User = mongoose.model<IUser>('User', userSchema);
+const UserModel = mongoose.model<IUserDocument>('User', userSchema);
 
-export { User };
+export { UserModel };
