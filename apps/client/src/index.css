@@ -1,9 +1,16 @@
 @import 'tailwindcss';
+/* @layer theme , base, antd, components, utilities; */
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 *,
 *::before,
 *::after {
   box-sizing: border-box;
+}
+
+.anticon {
+  color: revert-layer;
 }
 
 :root {
@@ -31,9 +38,6 @@ html,
 body {
   font-family: var(--font-sans);
   background-color: var(--color-bg);
-  /* color: var(--color-text); */
-  /* font-size: 14px; */
-  /* line-height: 1.6; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
@@ -53,7 +57,7 @@ button {
 }
 
 ::-webkit-scrollbar {
-  width: 6px;
+  width: 0px;
   height: 6px;
 }
 ::-webkit-scrollbar-track {

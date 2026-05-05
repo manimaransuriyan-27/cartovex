@@ -11,7 +11,6 @@ const antThemeToken = {
     borderRadius: 6,
     borderRadiusLG: 10,
     borderRadiusSM: 4,
-    fontFamily: "'DM Sans', sans-serif",
     fontSize: 14,
     fontSizeLG: 16,
     lineHeight: 1.6,
