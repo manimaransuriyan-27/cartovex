@@ -3,20 +3,6 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "compilerOptions": {
-    "baseUrl": "./",
-    "paths": {
-      "@types/*": [
-        "src/types/*"
-      ],
-      "@utils/*": [
-        "src/utils/*"
-      ],
-      "@components/*": [
-        "src/components/*"
-      ]
-    }
-  },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
@@ -24,12 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/cssinjs": "^2.1.2",
     "@ant-design/icons": "^6.2.2",
     "@cartovex/constants": "workspace:*",
     "@cartovex/types": "workspace:*",
     "@cartovex/utils": "workspace:*",
+    "@hookform/resolvers": "^5.2.2",
     "@tanstack/react-query": "^5.100.5",
     "@tanstack/react-query-devtools": "^5.100.6",
+    "@uidotdev/usehooks": "^2.4.1",
     "antd": "^6.3.7",
     "axios": "^1.15.2",
     "class-variance-authority": "^0.7.1",
@@ -38,6 +27,7 @@
     "mobx-react-lite": "^4.1.1",
     "react": "^19.2.5",
     "react-dom": "^19.2.5",
+    "react-hook-form": "^7.75.0",
     "react-router-dom": "^7.14.2",
     "tailwind-merge": "^3.5.0",
     "zod": "^4.3.6"

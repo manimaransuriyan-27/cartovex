@@ -1,14 +1,14 @@
-import { IAddress } from '@cartovex/types';
+import { IUserDocument } from '@/types';
+import { AddressLabel, IAddress, UserRole } from '@cartovex/types';
 import bcrypt from 'bcryptjs';
 import mongoose, { Schema } from 'mongoose';
-import { IUserDocument } from '../types';
 
-const addressSchema = new mongoose.Schema<IAddress>(
+const addressSchema = new Schema<IAddress>(
   {
     label: {
       type: String,
-      enum: ['home', 'work', 'other'],
-      default: 'home',
+      enum: AddressLabel,
+      default: AddressLabel.OTHER,
     },
     fullName: { type: String, required: true, trim: true },
     phone: { type: String, required: true, trim: true },
@@ -29,16 +29,16 @@ const userSchema = new Schema<IUserDocument>(
     email: { type: String, required: true, unique: true, lowercase: true, trim: true },
     password: { type: String, required: true },
     phone: { type: String, default: '' },
-
     role: {
       type: String,
-      enum: ['user', 'admin'],
-      default: 'user',
+      enum: Object.values(UserRole),
+      default: UserRole.CUSTOMER,
     },
     addresses: [addressSchema],
     isActive: { type: Boolean, default: true },
     passwordResetToken: { type: String, select: false },
     passwordResetExpires: { type: Date, select: false },
+    refreshToken: { type: String, select: false },
   },
   { timestamps: true },
 );
@@ -46,7 +46,7 @@ const userSchema = new Schema<IUserDocument>(
 userSchema.pre<IUserDocument>('save', async function () {
   if (!this.isModified('password')) return;
   try {
-    const salt = await bcrypt.genSalt(15);
+    const salt = await bcrypt.genSalt(12);
     this.password = await bcrypt.hash(this.password, salt);
   } catch (err) {
     throw err;
